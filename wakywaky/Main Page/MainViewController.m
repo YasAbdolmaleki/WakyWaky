@@ -12,6 +12,7 @@
 
 @interface MainViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *alarmsTableView;
+@property (strong, nonatomic) NSMutableArray *testArray;
 @end
 
 @implementation MainViewController
@@ -19,6 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.testArray = [NSMutableArray arrayWithObjects:@"09:00AM", @"12:25AM", @"04:14AM", @"02:12AM", @"01:08AM", nil];
     [self setupNavigationBar];
     
     [self.alarmsTableView registerNib:[UINib nibWithNibName:@"AlarmTableViewCell" bundle:nil] forCellReuseIdentifier:@"AlarmTableViewCell"];
@@ -37,12 +39,7 @@
     [self.navigationItem setRightBarButtonItem:addButton];
     
     //left button
-    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit"
-                                                                  style:UIBarButtonItemStylePlain
-                                                                 target:self
-                                                                 action:@selector(editAlarmView)];
-    [editButton setTintColor:[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1]];
-    [self.navigationItem setLeftBarButtonItem:editButton];
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
 }
 
 - (void)addAlarmView {
@@ -53,14 +50,33 @@
     //asdfa
 }
 
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    [super setEditing:editing animated:animated];
+    [self.alarmsTableView setEditing:editing animated:animated];
+}
+
+#pragma UITableViewDataSource
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     AlarmTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AlarmTableViewCell"];
+    cell.timeLabel.text = [self.testArray objectAtIndex:indexPath.row];
     return cell;
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+#pragma UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [tableView beginUpdates];
+        [self.testArray  removeObjectAtIndex:[indexPath row]];
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [tableView endUpdates];
+    }
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [self.testArray count];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
