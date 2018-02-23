@@ -6,14 +6,14 @@
 //  Copyright © 2018 Yas Marcu. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "MainViewController.h"
 #import "AlertCollectionViewCell.h"
 
-@interface ViewController ()
+@interface MainViewController ()
 @property (weak, nonatomic) IBOutlet UICollectionView *AlertsCollectionView;
 @end
 
-@implementation ViewController
+@implementation MainViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

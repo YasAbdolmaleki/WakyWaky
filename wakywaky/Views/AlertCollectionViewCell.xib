@@ -21,7 +21,7 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4:30AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0D4-m3-2Gv" userLabel="Alarm Label">
-                        <rect key="frame" x="30" y="0.0" width="174" height="101"/>
+                        <rect key="frame" x="20" y="0.0" width="174" height="101"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="101" id="dxf-gE-Tzf"/>
@@ -31,7 +31,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ooC-XN-tlW">
-                        <rect key="frame" x="428" y="35" width="51" height="31"/>
+                        <rect key="frame" x="458" y="35" width="51" height="31"/>
                     </switch>
                 </subviews>
             </view>
@@ -39,8 +39,8 @@
             <constraints>
                 <constraint firstAttribute="topMargin" secondItem="0D4-m3-2Gv" secondAttribute="top" id="NRe-RN-0uI"/>
                 <constraint firstAttribute="bottomMargin" secondItem="0D4-m3-2Gv" secondAttribute="bottom" id="Pwd-9j-oZP"/>
-                <constraint firstAttribute="trailing" secondItem="ooC-XN-tlW" secondAttribute="trailing" constant="40" id="Wti-LP-1hA"/>
-                <constraint firstItem="0D4-m3-2Gv" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leadingMargin" constant="10" id="gnq-7B-Ysg"/>
+                <constraint firstAttribute="trailing" secondItem="ooC-XN-tlW" secondAttribute="trailing" constant="10" id="Wti-LP-1hA"/>
+                <constraint firstItem="0D4-m3-2Gv" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leadingMargin" id="gnq-7B-Ysg"/>
                 <constraint firstItem="ooC-XN-tlW" firstAttribute="centerY" secondItem="0D4-m3-2Gv" secondAttribute="centerY" id="o9Q-I6-MXt"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="SEy-5g-ep8"/>
