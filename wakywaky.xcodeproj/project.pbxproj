@@ -19,6 +19,8 @@
 		0FA96CBA2040614200571950 /* AlertCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA96CB82040614200571950 /* AlertCollectionViewCell.m */; };
 		0FA96CBE2040661500571950 /* MainNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA96CBC2040661500571950 /* MainNavigationViewController.m */; };
 		0FA96CBF2040661500571950 /* MainNavigationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FA96CBD2040661500571950 /* MainNavigationViewController.xib */; };
+		0FA96CC4204077E600571950 /* AlarmTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA96CC2204077E600571950 /* AlarmTableViewCell.m */; };
+		0FA96CC5204077E600571950 /* AlarmTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FA96CC3204077E600571950 /* AlarmTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,9 @@
 		0FA96CBB2040661500571950 /* MainNavigationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainNavigationViewController.h; sourceTree = "<group>"; };
 		0FA96CBC2040661500571950 /* MainNavigationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainNavigationViewController.m; sourceTree = "<group>"; };
 		0FA96CBD2040661500571950 /* MainNavigationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainNavigationViewController.xib; sourceTree = "<group>"; };
+		0FA96CC1204077E600571950 /* AlarmTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlarmTableViewCell.h; sourceTree = "<group>"; };
+		0FA96CC2204077E600571950 /* AlarmTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlarmTableViewCell.m; sourceTree = "<group>"; };
+		0FA96CC3204077E600571950 /* AlarmTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlarmTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +152,9 @@
 				0FA96CB62040614200571950 /* AlertCollectionViewCell.h */,
 				0FA96CB72040614200571950 /* AlertCollectionViewCell.xib */,
 				0FA96CB82040614200571950 /* AlertCollectionViewCell.m */,
+				0FA96CC1204077E600571950 /* AlarmTableViewCell.h */,
+				0FA96CC2204077E600571950 /* AlarmTableViewCell.m */,
+				0FA96CC3204077E600571950 /* AlarmTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -271,6 +279,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0FA96C7D2029337D00571950 /* LaunchScreen.storyboard in Resources */,
+				0FA96CC5204077E600571950 /* AlarmTableViewCell.xib in Resources */,
 				0FA96C7A2029337D00571950 /* Assets.xcassets in Resources */,
 				0FA96CBF2040661500571950 /* MainNavigationViewController.xib in Resources */,
 				0FA96C782029337D00571950 /* Main.storyboard in Resources */,
@@ -304,6 +313,7 @@
 				0FA96CBA2040614200571950 /* AlertCollectionViewCell.m in Sources */,
 				0FA96CBE2040661500571950 /* MainNavigationViewController.m in Sources */,
 				0FA96C722029337D00571950 /* AppDelegate.m in Sources */,
+				0FA96CC4204077E600571950 /* AlarmTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

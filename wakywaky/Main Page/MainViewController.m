@@ -8,9 +8,10 @@
 
 #import "MainViewController.h"
 #import "AlertCollectionViewCell.h"
+#import "AlarmTableViewCell.h"
 
 @interface MainViewController ()
-@property (weak, nonatomic) IBOutlet UICollectionView *AlertsCollectionView;
+@property (weak, nonatomic) IBOutlet UITableView *alarmsTableView;
 @end
 
 @implementation MainViewController
@@ -20,10 +21,10 @@
     
     [self setupNavigationBar];
     
-    self.AlertsCollectionView.delegate = self;
-    [self.AlertsCollectionView registerNib:[UINib nibWithNibName:@"AlertCollectionViewCell" bundle:nil]
-                forCellWithReuseIdentifier:@"AlertCollectionViewCell"];
-    [self.AlertsCollectionView reloadData];
+    [self.alarmsTableView registerNib:[UINib nibWithNibName:@"AlarmTableViewCell" bundle:nil] forCellReuseIdentifier:@"AlarmTableViewCell"];
+    
+    self.alarmsTableView.tableFooterView = [UIView new];
+    [self.alarmsTableView reloadData];
 }
 
 - (void)setupNavigationBar {
@@ -52,29 +53,23 @@
     //asdfa
 }
 
-#pragma UICollectionViewDataSource
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return 5;
-}
-
-- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    AlertCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AlertCollectionViewCell" forIndexPath:indexPath];
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    AlarmTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AlarmTableViewCell"];
     return cell;
 }
 
-#pragma UICollectionViewDelegate
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    //TBD
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 5;
+    
 }
 
--(CGSize) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return  CGSizeMake(collectionView.frame.size.width,60);
+    return 80;
 }
 
 @end

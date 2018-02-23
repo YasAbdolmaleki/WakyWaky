@@ -19,43 +19,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="yEC-Vv-cvP">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rwu-4k-oOz" userLabel="Alarms Table View">
                                 <rect key="frame" x="16" y="64" width="343" height="603"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2yU-7X-TPn">
-                                    <size key="itemSize" width="50" height="50"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AlertCollectionViewCell" id="cL9-fc-6zK" customClass="AlertCollectionViewCell">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </view>
-                                    </collectionViewCell>
-                                </cells>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <connections>
-                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="IEt-Wv-T5f"/>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="m8h-Y1-pZ6"/>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="KSv-8o-df7"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="GPL-lL-Dks"/>
                                 </connections>
-                            </collectionView>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="topMargin" secondItem="yEC-Vv-cvP" secondAttribute="top" id="2bk-3N-oAF"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="yEC-Vv-cvP" secondAttribute="leading" id="C8Z-ai-iDu"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="yEC-Vv-cvP" secondAttribute="trailing" id="Fwz-ml-jCP"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="yEC-Vv-cvP" secondAttribute="bottom" id="hB4-i3-rmt"/>
+                            <constraint firstItem="rwu-4k-oOz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="E9M-eJ-B3u"/>
+                            <constraint firstItem="rwu-4k-oOz" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="LID-so-ToD"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="rwu-4k-oOz" secondAttribute="bottom" id="Vk1-Rw-6CM"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="rwu-4k-oOz" secondAttribute="trailing" id="nqv-EO-5N2"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Alarm" id="LfK-Yd-8if"/>
                     <connections>
-                        <outlet property="AlertsCollectionView" destination="yEC-Vv-cvP" id="Z4p-xY-Hha"/>
+                        <outlet property="alarmsTableView" destination="rwu-4k-oOz" id="EgU-pc-Kgt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
