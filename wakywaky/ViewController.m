@@ -7,23 +7,46 @@
 //
 
 #import "ViewController.h"
+#import "AlertCollectionViewCell.h"
 
 @interface ViewController ()
-
+@property (weak, nonatomic) IBOutlet UICollectionView *AlertsCollectionView;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    self.AlertsCollectionView.delegate = self;
+    [self.AlertsCollectionView registerNib:[UINib nibWithNibName:@"AlertCollectionViewCell" bundle:nil]
+                forCellWithReuseIdentifier:@"AlertCollectionViewCell"];
+    [self.AlertsCollectionView reloadData];
 }
 
+#pragma UICollectionViewDataSource
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return 5;
 }
 
+- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    AlertCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AlertCollectionViewCell" forIndexPath:indexPath];
+    return cell;
+}
+
+#pragma UICollectionViewDelegate
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    //TBD
+}
+
+-(CGSize) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return  CGSizeMake(collectionView.frame.size.width,60);
+}
 
 @end

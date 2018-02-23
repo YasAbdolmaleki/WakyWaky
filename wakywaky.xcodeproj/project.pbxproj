@@ -15,6 +15,8 @@
 		0FA96C802029337D00571950 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA96C7F2029337D00571950 /* main.m */; };
 		0FA96C8A2029337D00571950 /* wakywakyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA96C892029337D00571950 /* wakywakyTests.m */; };
 		0FA96C952029337D00571950 /* wakywakyUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA96C942029337D00571950 /* wakywakyUITests.m */; };
+		0FA96CB92040614200571950 /* AlertCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FA96CB72040614200571950 /* AlertCollectionViewCell.xib */; };
+		0FA96CBA2040614200571950 /* AlertCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA96CB82040614200571950 /* AlertCollectionViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,9 @@
 		0FA96C902029337D00571950 /* wakywakyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = wakywakyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FA96C942029337D00571950 /* wakywakyUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = wakywakyUITests.m; sourceTree = "<group>"; };
 		0FA96C962029337D00571950 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0FA96CB62040614200571950 /* AlertCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertCollectionViewCell.h; sourceTree = "<group>"; };
+		0FA96CB72040614200571950 /* AlertCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertCollectionViewCell.xib; sourceTree = "<group>"; };
+		0FA96CB82040614200571950 /* AlertCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertCollectionViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +106,7 @@
 		0FA96C6F2029337D00571950 /* wakywaky */ = {
 			isa = PBXGroup;
 			children = (
+				0FA96CB52040614200571950 /* Views */,
 				0FA96C702029337D00571950 /* AppDelegate.h */,
 				0FA96C712029337D00571950 /* AppDelegate.m */,
 				0FA96C732029337D00571950 /* ViewController.h */,
@@ -130,6 +136,16 @@
 				0FA96C962029337D00571950 /* Info.plist */,
 			);
 			path = wakywakyUITests;
+			sourceTree = "<group>";
+		};
+		0FA96CB52040614200571950 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0FA96CB62040614200571950 /* AlertCollectionViewCell.h */,
+				0FA96CB72040614200571950 /* AlertCollectionViewCell.xib */,
+				0FA96CB82040614200571950 /* AlertCollectionViewCell.m */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,6 +257,7 @@
 				0FA96C7D2029337D00571950 /* LaunchScreen.storyboard in Resources */,
 				0FA96C7A2029337D00571950 /* Assets.xcassets in Resources */,
 				0FA96C782029337D00571950 /* Main.storyboard in Resources */,
+				0FA96CB92040614200571950 /* AlertCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,6 +284,7 @@
 			files = (
 				0FA96C752029337D00571950 /* ViewController.m in Sources */,
 				0FA96C802029337D00571950 /* main.m in Sources */,
+				0FA96CBA2040614200571950 /* AlertCollectionViewCell.m in Sources */,
 				0FA96C722029337D00571950 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
