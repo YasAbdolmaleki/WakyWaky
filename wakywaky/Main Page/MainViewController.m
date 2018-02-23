@@ -7,8 +7,8 @@
 //
 
 #import "MainViewController.h"
-#import "AlertCollectionViewCell.h"
 #import "AlarmTableViewCell.h"
+#import <UserNotifications/UserNotifications.h>
 
 @interface MainViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *alarmsTableView;
@@ -22,7 +22,7 @@
     
     self.testArray = [NSMutableArray arrayWithObjects:@"09:00AM", @"12:25AM", @"04:14AM", @"02:12AM", @"01:08AM", nil];
     [self setupNavigationBar];
-    
+     
     [self.alarmsTableView registerNib:[UINib nibWithNibName:@"AlarmTableViewCell" bundle:nil] forCellReuseIdentifier:@"AlarmTableViewCell"];
     
     self.alarmsTableView.tableFooterView = [UIView new];
@@ -43,10 +43,6 @@
 }
 
 - (void)addAlarmView {
-    //asdfa
-}
-
-- (void)editAlarmView {
     //asdfa
 }
 
