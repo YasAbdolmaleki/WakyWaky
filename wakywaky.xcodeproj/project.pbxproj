@@ -17,6 +17,8 @@
 		0FA96C952029337D00571950 /* wakywakyUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA96C942029337D00571950 /* wakywakyUITests.m */; };
 		0FA96CB92040614200571950 /* AlertCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FA96CB72040614200571950 /* AlertCollectionViewCell.xib */; };
 		0FA96CBA2040614200571950 /* AlertCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA96CB82040614200571950 /* AlertCollectionViewCell.m */; };
+		0FA96CBE2040661500571950 /* MainNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA96CBC2040661500571950 /* MainNavigationViewController.m */; };
+		0FA96CBF2040661500571950 /* MainNavigationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FA96CBD2040661500571950 /* MainNavigationViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,9 @@
 		0FA96CB62040614200571950 /* AlertCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertCollectionViewCell.h; sourceTree = "<group>"; };
 		0FA96CB72040614200571950 /* AlertCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertCollectionViewCell.xib; sourceTree = "<group>"; };
 		0FA96CB82040614200571950 /* AlertCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertCollectionViewCell.m; sourceTree = "<group>"; };
+		0FA96CBB2040661500571950 /* MainNavigationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainNavigationViewController.h; sourceTree = "<group>"; };
+		0FA96CBC2040661500571950 /* MainNavigationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainNavigationViewController.m; sourceTree = "<group>"; };
+		0FA96CBD2040661500571950 /* MainNavigationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainNavigationViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +121,9 @@
 				0FA96C7B2029337D00571950 /* LaunchScreen.storyboard */,
 				0FA96C7E2029337D00571950 /* Info.plist */,
 				0FA96C7F2029337D00571950 /* main.m */,
+				0FA96CBB2040661500571950 /* MainNavigationViewController.h */,
+				0FA96CBC2040661500571950 /* MainNavigationViewController.m */,
+				0FA96CBD2040661500571950 /* MainNavigationViewController.xib */,
 			);
 			path = wakywaky;
 			sourceTree = "<group>";
@@ -256,6 +264,7 @@
 			files = (
 				0FA96C7D2029337D00571950 /* LaunchScreen.storyboard in Resources */,
 				0FA96C7A2029337D00571950 /* Assets.xcassets in Resources */,
+				0FA96CBF2040661500571950 /* MainNavigationViewController.xib in Resources */,
 				0FA96C782029337D00571950 /* Main.storyboard in Resources */,
 				0FA96CB92040614200571950 /* AlertCollectionViewCell.xib in Resources */,
 			);
@@ -285,6 +294,7 @@
 				0FA96C752029337D00571950 /* ViewController.m in Sources */,
 				0FA96C802029337D00571950 /* main.m in Sources */,
 				0FA96CBA2040614200571950 /* AlertCollectionViewCell.m in Sources */,
+				0FA96CBE2040661500571950 /* MainNavigationViewController.m in Sources */,
 				0FA96C722029337D00571950 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

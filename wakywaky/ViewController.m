@@ -18,10 +18,38 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setupNavigationBar];
+    
     self.AlertsCollectionView.delegate = self;
     [self.AlertsCollectionView registerNib:[UINib nibWithNibName:@"AlertCollectionViewCell" bundle:nil]
                 forCellWithReuseIdentifier:@"AlertCollectionViewCell"];
     [self.AlertsCollectionView reloadData];
+}
+
+- (void)setupNavigationBar {
+    //right button
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithTitle:@"Add"
+                                                                  style:UIBarButtonItemStylePlain
+                                                                 target:self
+                                                                 action:@selector(addAlarmView)];
+    [addButton setTintColor:[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1]];
+    [self.navigationItem setRightBarButtonItem:addButton];
+    
+    //left button
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit"
+                                                                  style:UIBarButtonItemStylePlain
+                                                                 target:self
+                                                                 action:@selector(editAlarmView)];
+    [editButton setTintColor:[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1]];
+    [self.navigationItem setLeftBarButtonItem:editButton];
+}
+
+- (void)addAlarmView {
+    //asdfa
+}
+
+- (void)editAlarmView {
+    //asdfa
 }
 
 #pragma UICollectionViewDataSource
