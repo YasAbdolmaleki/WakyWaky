@@ -19,6 +19,7 @@
 		0FA96CBF2040661500571950 /* MainNavigationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FA96CBD2040661500571950 /* MainNavigationViewController.xib */; };
 		0FA96CC4204077E600571950 /* AlarmTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA96CC2204077E600571950 /* AlarmTableViewCell.m */; };
 		0FA96CC5204077E600571950 /* AlarmTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FA96CC3204077E600571950 /* AlarmTableViewCell.xib */; };
+		0FA96CC72041B03D00571950 /* beep.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0FA96CC62041B03D00571950 /* beep.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		0FA96CC1204077E600571950 /* AlarmTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlarmTableViewCell.h; sourceTree = "<group>"; };
 		0FA96CC2204077E600571950 /* AlarmTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlarmTableViewCell.m; sourceTree = "<group>"; };
 		0FA96CC3204077E600571950 /* AlarmTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlarmTableViewCell.xib; sourceTree = "<group>"; };
+		0FA96CC62041B03D00571950 /* beep.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = beep.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 		0FA96C6F2029337D00571950 /* wakywaky */ = {
 			isa = PBXGroup;
 			children = (
+				0FA96CC62041B03D00571950 /* beep.mp3 */,
 				0FA96CC02040723700571950 /* Main Page */,
 				0FA96CB52040614200571950 /* Views */,
 				0FA96C702029337D00571950 /* AppDelegate.h */,
@@ -272,6 +275,7 @@
 			files = (
 				0FA96C7D2029337D00571950 /* LaunchScreen.storyboard in Resources */,
 				0FA96CC5204077E600571950 /* AlarmTableViewCell.xib in Resources */,
+				0FA96CC72041B03D00571950 /* beep.mp3 in Resources */,
 				0FA96C7A2029337D00571950 /* Assets.xcassets in Resources */,
 				0FA96CBF2040661500571950 /* MainNavigationViewController.xib in Resources */,
 				0FA96C782029337D00571950 /* Main.storyboard in Resources */,
