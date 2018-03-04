@@ -8,11 +8,12 @@
 
 #import "MainViewController.h"
 #import "AlarmTableViewCell.h"
+#import "AddAlarmTableViewController.h"
 
 @interface MainViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *alarmsTableView;
-@property (strong, nonatomic) NSMutableArray *testArray;
-@property (strong, nonatomic) AVAudioPlayer *audioPlayer;
+@property (strong, nonatomic) AddAlarmTableViewController *addAlarmTableViewController;
+@property (strong, nonatomic) NSMutableArray *testArray; 
 
 @end
 
@@ -77,29 +78,6 @@
     
 }
 
-#pragma alarm sound
-
--(void)playSound {
-    NSURL *url = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@.mp3", [[NSBundle mainBundle] resourcePath], @"beep"]];
-    NSError *error;
-    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
-    self.audioPlayer.numberOfLoops = -1;
-    if (self.audioPlayer == nil) {
-        NSLog (@"%@",[error description]);
-    } else {
-        [self.audioPlayer play];
-    }
-    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector (pauseMethod:) userInfo:nil repeats:NO];
-}
-
--(void)pauseMethod:(NSTimer *)timer{
-    if (self.audioPlayer) {
-        self.audioPlayer = nil;
-    }
-    [timer invalidate];
-    timer = nil;
-}
-
 #pragma setup
 
 - (void)setupNavigationBar {
@@ -116,7 +94,9 @@
 }
 
 - (void)addAlarmView {
-    //asdfa
+    AddAlarmTableViewController *addAlarmTableViewController = [[AddAlarmTableViewController alloc] init];
+    [self.navigationController pushViewController:addAlarmTableViewController
+                                         animated:YES];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
@@ -158,11 +138,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [NSTimer scheduledTimerWithTimeInterval:1.0
-                                     target:self
-                                   selector:@selector(playSound)
-                                   userInfo:nil
-                                    repeats:NO];
+
 }
 
 @end

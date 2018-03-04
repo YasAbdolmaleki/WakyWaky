@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <AVFoundation/AVFoundation.h>
+
 @import UserNotifications;
 
-@interface MainViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UNUserNotificationCenterDelegate, AVAudioPlayerDelegate>
-
+@interface MainViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UNUserNotificationCenterDelegate>
 
 @end
 

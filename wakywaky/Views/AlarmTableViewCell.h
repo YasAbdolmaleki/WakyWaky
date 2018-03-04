@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface AlarmTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UISwitch *alertSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @end

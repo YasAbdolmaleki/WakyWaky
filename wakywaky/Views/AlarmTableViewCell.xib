@@ -22,6 +22,9 @@
                 <subviews>
                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kQM-pC-a6b">
                         <rect key="frame" x="424" y="48" width="51" height="31"/>
+                        <connections>
+                            <action selector="valueChanged:" destination="KGk-i7-Jjw" eventType="valueChanged" id="yBk-h8-FKQ"/>
+                        </connections>
                     </switch>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4:30AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gDn-1w-qD5" userLabel="Alarm Label">
                         <rect key="frame" x="20" y="21" width="174" height="84.5"/>
@@ -41,6 +44,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
+                <outlet property="alertSwitch" destination="kQM-pC-a6b" id="IAz-sm-dBp"/>
                 <outlet property="timeLabel" destination="gDn-1w-qD5" id="apq-ig-Rcr"/>
             </connections>
             <point key="canvasLocation" x="195.5" y="115"/>

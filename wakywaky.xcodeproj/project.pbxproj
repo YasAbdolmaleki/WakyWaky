@@ -19,7 +19,9 @@
 		0FA96CBF2040661500571950 /* MainNavigationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FA96CBD2040661500571950 /* MainNavigationViewController.xib */; };
 		0FA96CC4204077E600571950 /* AlarmTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA96CC2204077E600571950 /* AlarmTableViewCell.m */; };
 		0FA96CC5204077E600571950 /* AlarmTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FA96CC3204077E600571950 /* AlarmTableViewCell.xib */; };
-		0FA96CC72041B03D00571950 /* beep.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0FA96CC62041B03D00571950 /* beep.mp3 */; };
+		0FA96CD02048E40B00571950 /* AddAlarmTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA96CCE2048E40B00571950 /* AddAlarmTableViewController.m */; };
+		0FA96CD12048E40B00571950 /* AddAlarmTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FA96CCF2048E40B00571950 /* AddAlarmTableViewController.xib */; };
+		0FA96CD32048ED1200571950 /* minions.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0FA96CD22048ED1200571950 /* minions.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,7 +64,11 @@
 		0FA96CC1204077E600571950 /* AlarmTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlarmTableViewCell.h; sourceTree = "<group>"; };
 		0FA96CC2204077E600571950 /* AlarmTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlarmTableViewCell.m; sourceTree = "<group>"; };
 		0FA96CC3204077E600571950 /* AlarmTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlarmTableViewCell.xib; sourceTree = "<group>"; };
-		0FA96CC62041B03D00571950 /* beep.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = beep.mp3; sourceTree = "<group>"; };
+		0FA96CCD2048E40B00571950 /* AddAlarmTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddAlarmTableViewController.h; sourceTree = "<group>"; };
+		0FA96CCE2048E40B00571950 /* AddAlarmTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddAlarmTableViewController.m; sourceTree = "<group>"; };
+		0FA96CCF2048E40B00571950 /* AddAlarmTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddAlarmTableViewController.xib; sourceTree = "<group>"; };
+		0FA96CD22048ED1200571950 /* minions.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minions.mp3; sourceTree = "<group>"; };
+		0FA96CD4204C4DCA00571950 /* wakywaky.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = wakywaky.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,7 +119,8 @@
 		0FA96C6F2029337D00571950 /* wakywaky */ = {
 			isa = PBXGroup;
 			children = (
-				0FA96CC62041B03D00571950 /* beep.mp3 */,
+				0FA96CD4204C4DCA00571950 /* wakywaky.entitlements */,
+				0FA96CD22048ED1200571950 /* minions.mp3 */,
 				0FA96CC02040723700571950 /* Main Page */,
 				0FA96CB52040614200571950 /* Views */,
 				0FA96C702029337D00571950 /* AppDelegate.h */,
@@ -163,6 +170,9 @@
 				0FA96CBB2040661500571950 /* MainNavigationViewController.h */,
 				0FA96CBC2040661500571950 /* MainNavigationViewController.m */,
 				0FA96CBD2040661500571950 /* MainNavigationViewController.xib */,
+				0FA96CCD2048E40B00571950 /* AddAlarmTableViewController.h */,
+				0FA96CCE2048E40B00571950 /* AddAlarmTableViewController.m */,
+				0FA96CCF2048E40B00571950 /* AddAlarmTableViewController.xib */,
 			);
 			path = "Main Page";
 			sourceTree = "<group>";
@@ -235,6 +245,11 @@
 					0FA96C6C2029337D00571950 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					0FA96C842029337D00571950 = {
 						CreatedOnToolsVersion = 9.2;
@@ -275,9 +290,10 @@
 			files = (
 				0FA96C7D2029337D00571950 /* LaunchScreen.storyboard in Resources */,
 				0FA96CC5204077E600571950 /* AlarmTableViewCell.xib in Resources */,
-				0FA96CC72041B03D00571950 /* beep.mp3 in Resources */,
 				0FA96C7A2029337D00571950 /* Assets.xcassets in Resources */,
+				0FA96CD12048E40B00571950 /* AddAlarmTableViewController.xib in Resources */,
 				0FA96CBF2040661500571950 /* MainNavigationViewController.xib in Resources */,
+				0FA96CD32048ED1200571950 /* minions.mp3 in Resources */,
 				0FA96C782029337D00571950 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -308,6 +324,7 @@
 				0FA96CBE2040661500571950 /* MainNavigationViewController.m in Sources */,
 				0FA96C722029337D00571950 /* AppDelegate.m in Sources */,
 				0FA96CC4204077E600571950 /* AlarmTableViewCell.m in Sources */,
+				0FA96CD02048E40B00571950 /* AddAlarmTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,7 +487,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = wakywaky/wakywaky.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = K87C2842H7;
 				INFOPLIST_FILE = wakywaky/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.YasMarcu.wakywaky;
@@ -483,7 +502,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = wakywaky/wakywaky.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = K87C2842H7;
 				INFOPLIST_FILE = wakywaky/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.YasMarcu.wakywaky;
