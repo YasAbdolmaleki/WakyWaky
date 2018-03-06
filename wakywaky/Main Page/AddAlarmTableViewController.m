@@ -7,14 +7,21 @@
 //
 
 #import "AddAlarmTableViewController.h"
+
 #import "AlarmTableViewCell.h"
 
-@interface AddAlarmTableViewController () <UIPickerViewDelegate, UIPickerViewDataSource>
+@import AVFoundation;
+@import UserNotifications;
+
+@interface AddAlarmTableViewController () <UIPickerViewDelegate,UIPickerViewDataSource, UNUserNotificationCenterDelegate, AVAudioPlayerDelegate>
 @property (nonatomic,strong) UIPickerView *timePickerView;
 
 @property (nonatomic,assign) NSInteger hour;
 @property (nonatomic,assign) NSInteger mins;
 @property (nonatomic,strong) NSString *AMPM;
+
+@property (strong, nonatomic) AVAudioPlayer *audioPlayer;
+@property (strong, nonatomic) UNUserNotificationCenter *uncenter;
 @end
 
 @implementation AddAlarmTableViewController
@@ -22,39 +29,98 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self registerForRemoteNotification];
+    
     self.tableView.tableFooterView = [UIView new];
     [self setTitle:@"Add Alarm"];
     [self.view setBackgroundColor:[UIColor colorWithRed:0/255.0 green:23/255.0 blue:100/255.0 alpha:1.0]];
     
     //right button
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithTitle:@"Save"
+    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:@"Save"
                                                                   style:UIBarButtonItemStylePlain
                                                                  target:self
                                                                  action:@selector(saveTime)];
-    [addButton setTintColor:[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1]];
-    [self.navigationItem setRightBarButtonItem:addButton];
+    [saveButton setTintColor:[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1]];
+    [self.navigationItem setRightBarButtonItem:saveButton];
 }
 
 - (void)saveTime {
+    [self setAlarmInNotificationForm];
+    
+//    // today's date
+//    NSDate *date = [NSDate date];
+//    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier: NSCalendarIdentifierGregorian];
+//    NSDateComponents *components = [gregorian components: NSUIntegerMax fromDate: date];
+//
+//    // set hour/min for today
+//    [components setHour: self.hour];
+//    [components setMinute: self.mins];
+//    NSDate *newDate = [gregorian dateFromComponents: components];
+//
+//    // Date has passed
+//    if ([newDate timeIntervalSinceNow] < 0.0) {
+//        #warning not accurate, doesn't consider the end of month or next year
+//        [components setDay:[components day] + 1];
+//        newDate = [gregorian dateFromComponents: components];
+//    }
+//
+//    // save
+//    [[NSUserDefaults standardUserDefaults] setObject:newDate forKey:@"alarmSet"];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+//
+//    // testing
+//    if ([newDate timeIntervalSinceNow] < 200.0) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"60 seconds or less" message:@"Text" delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil, nil];
+//        [alert show];
+//        return;
+//    }
+}
 
-    // set timer
-//    NSDateComponents *comps = [[NSDateComponents alloc] init];
-//    [comps setHour:10];
-//    [comps setMinute:10];
-//    [comps setSecond:0];
-//    NSCalendar *theCalendar = [NSCalendar currentCalendar];
-//    NSDate *itemDate = [theCalendar dateByAddingComponents:comps toDate:[NSDate date] options:0];
+#pragma notification registration
+
+- (void)registerForRemoteNotification {
+    self.uncenter = [UNUserNotificationCenter currentNotificationCenter];
+    [self.uncenter setDelegate:self];
+    [self.uncenter requestAuthorizationWithOptions:(UNAuthorizationOptionAlert+UNAuthorizationOptionBadge+UNAuthorizationOptionSound)
+                            completionHandler:^(BOOL granted, NSError * _Nullable error) {
+                                NSLog(@"%@" , granted ? @"success to request authorization." : @"failed to request authorization .");
+                            }];
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
+    [self.uncenter getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
+        NSLog(@"%s\nline:%@\n-----\n%@\n\n", __func__, @(__LINE__), settings);
+        if (settings.authorizationStatus == UNAuthorizationStatusNotDetermined) {
+            //TODO:
+        } else if (settings.authorizationStatus == UNAuthorizationStatusDenied) {
+            //TODO:
+        } else if (settings.authorizationStatus == UNAuthorizationStatusAuthorized) {
+            //TODO:
+        }
+    }];
+}
+
+- (void)setAlarmInNotificationForm {
+    /// 4. update application icon badge number
+    UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
+    content.title = [NSString localizedUserNotificationStringForKey:@"Elon said:" arguments:nil];
+    content.body = [NSString localizedUserNotificationStringForKey:@"Hello Tom！Get up, let's play with Jerry!" arguments:nil];
+    content.sound = [UNNotificationSound defaultSound];
+    content.badge = @(UIApplication.sharedApplication.applicationIconBadgeNumber + 1);
+    
+    
     
     // today's date
     NSDate *date = [NSDate date];
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier: NSCalendarIdentifierGregorian];
-    NSDateComponents *components = [gregorian components: NSUIntegerMax fromDate: date];
+    //NSDateComponents *components = [gregorian components: NSUIntegerMax fromDate: date];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate:date];
     
     // set hour/min for today
     [components setHour: self.hour];
     [components setMinute: self.mins];
-    NSDate *newDate = [gregorian dateFromComponents: components];
+    [components setSecond:0];
     
+    NSDate *newDate = [gregorian dateFromComponents: components];
+
     // Date has passed
     if ([newDate timeIntervalSinceNow] < 0.0) {
         #warning not accurate, doesn't consider the end of month or next year
@@ -62,20 +128,81 @@
         newDate = [gregorian dateFromComponents: components];
     }
     
-    // save
-    [[NSUserDefaults standardUserDefaults] setObject:newDate forKey:@"alarmSet"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    NSLog(@"--now\n %@",date);
+    NSLog(@"--alert\n %@",newDate);
+    NSLog(@"--hour\n %ld",self.hour);
+    NSLog(@"--components\n %@",components);
     
-    // testing
-    if ([newDate timeIntervalSinceNow] < 200.0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"60 seconds or less" message:@"Text" delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil, nil];
-        [alert show];
-        return;
-    }
+    UNCalendarNotificationTrigger *trigger = [UNCalendarNotificationTrigger triggerWithDateMatchingComponents:components
+                                                                                                      repeats:NO];
+    
+    // Deliver the notification in five seconds.
+//    UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:5 repeats:NO];
+    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:@"FiveSecond" content:content trigger:trigger];
+    
+    /// 3. schedule localNotification
+    [self.uncenter addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+        if (!error) {
+            NSLog(@"add NotificationRequest succeeded!");
+        }
+    }];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
+-(NSInteger)hourIn24Format:(NSInteger)selectedHour
+{
+    if ([self.AMPM isEqualToString:@"PM"]) {
+        return selectedHour + 12;
+    } else {
+        return selectedHour;
+    }
+}
+#pragma mark - UNUserNotificationCenterDelegate
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler {
+    if ([response.actionIdentifier isEqualToString:UNNotificationDismissActionIdentifier]) {
+        NSLog(@"Message Closed");
+        
+    } else if ([response.actionIdentifier isEqualToString:UNNotificationDefaultActionIdentifier]) {
+        NSLog(@"App is Open");
+        [NSTimer scheduledTimerWithTimeInterval:1.0
+                                         target:self
+                                       selector:@selector(playSound)
+                                       userInfo:nil
+                                        repeats:NO];
+    }
+    completionHandler();
+}
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler {
+    NSLog(@"----willPresentNotification");
+    [NSTimer scheduledTimerWithTimeInterval:1.0
+                                     target:self
+                                   selector:@selector(playSound)
+                                   userInfo:nil
+                                    repeats:NO];
+}
+
+#pragma AVAudioPlayerDelegate
+
+-(void)playSound {
+    NSURL *url = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@.mp3", [[NSBundle mainBundle] resourcePath], @"minions"]];
+    NSError *error;
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
+    self.audioPlayer.numberOfLoops = -1;
+    if (self.audioPlayer == nil) {
+        NSLog (@"%@",[error description]);
+    } else {
+        [self.audioPlayer play];
+    }
+    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector (pauseMethod:) userInfo:nil repeats:NO];
+}
+
+-(void)pauseMethod:(NSTimer *)timer{
+    if (self.audioPlayer) {
+        self.audioPlayer = nil;
+    }
+    [timer invalidate];
+    timer = nil;
 }
 
 #pragma mark - Table view data source
@@ -114,17 +241,20 @@
     return view;
 }
 
+#pragma mark - UIPickerViewDataSource
+
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     switch (component) {
         case 0:
-            self.hour = (row+1);
+            self.hour = [self hourIn24Format:(row+1)];
             break;
         case 1:
             self.mins = (row);
             break;
         default:
             self.AMPM = (row == 0) ? @"AM" : @"PM";
+            self.hour = [self hourIn24Format:self.hour];
             break;
     }
 }
