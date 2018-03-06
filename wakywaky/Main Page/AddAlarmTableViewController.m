@@ -13,7 +13,7 @@
 @import AVFoundation;
 @import UserNotifications;
 
-@interface AddAlarmTableViewController () <UIPickerViewDelegate,UIPickerViewDataSource, UNUserNotificationCenterDelegate, AVAudioPlayerDelegate>
+@interface AddAlarmTableViewController () <UIPickerViewDelegate,UIPickerViewDataSource,UNUserNotificationCenterDelegate,AVAudioPlayerDelegate>
 @property (nonatomic,strong) UIPickerView *timePickerView;
 
 @property (nonatomic,assign) NSInteger hour;
@@ -33,47 +33,14 @@
     
     self.tableView.tableFooterView = [UIView new];
     [self setTitle:@"Add Alarm"];
-    [self.view setBackgroundColor:[UIColor colorWithRed:0/255.0 green:23/255.0 blue:100/255.0 alpha:1.0]];
     
     //right button
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:@"Save"
                                                                   style:UIBarButtonItemStylePlain
                                                                  target:self
-                                                                 action:@selector(saveTime)];
+                                                                 action:@selector(setAlarmInNotificationForm)];
     [saveButton setTintColor:[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1]];
     [self.navigationItem setRightBarButtonItem:saveButton];
-}
-
-- (void)saveTime {
-    [self setAlarmInNotificationForm];
-    
-//    // today's date
-//    NSDate *date = [NSDate date];
-//    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier: NSCalendarIdentifierGregorian];
-//    NSDateComponents *components = [gregorian components: NSUIntegerMax fromDate: date];
-//
-//    // set hour/min for today
-//    [components setHour: self.hour];
-//    [components setMinute: self.mins];
-//    NSDate *newDate = [gregorian dateFromComponents: components];
-//
-//    // Date has passed
-//    if ([newDate timeIntervalSinceNow] < 0.0) {
-//        #warning not accurate, doesn't consider the end of month or next year
-//        [components setDay:[components day] + 1];
-//        newDate = [gregorian dateFromComponents: components];
-//    }
-//
-//    // save
-//    [[NSUserDefaults standardUserDefaults] setObject:newDate forKey:@"alarmSet"];
-//    [[NSUserDefaults standardUserDefaults] synchronize];
-//
-//    // testing
-//    if ([newDate timeIntervalSinceNow] < 200.0) {
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"60 seconds or less" message:@"Text" delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil, nil];
-//        [alert show];
-//        return;
-//    }
 }
 
 #pragma notification registration
@@ -89,29 +56,23 @@
     [self.uncenter getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
         NSLog(@"%s\nline:%@\n-----\n%@\n\n", __func__, @(__LINE__), settings);
         if (settings.authorizationStatus == UNAuthorizationStatusNotDetermined) {
-            //TODO:
         } else if (settings.authorizationStatus == UNAuthorizationStatusDenied) {
-            //TODO:
         } else if (settings.authorizationStatus == UNAuthorizationStatusAuthorized) {
-            //TODO:
         }
     }];
 }
 
 - (void)setAlarmInNotificationForm {
-    /// 4. update application icon badge number
+    // update application icon badge number
     UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
-    content.title = [NSString localizedUserNotificationStringForKey:@"Elon said:" arguments:nil];
-    content.body = [NSString localizedUserNotificationStringForKey:@"Hello Tom！Get up, let's play with Jerry!" arguments:nil];
+    content.title = [NSString localizedUserNotificationStringForKey:@"WAKY WAKY:" arguments:nil];
+    content.body = [NSString localizedUserNotificationStringForKey:@"Just making sure you are up!" arguments:nil];
     content.sound = [UNNotificationSound defaultSound];
     content.badge = @(UIApplication.sharedApplication.applicationIconBadgeNumber + 1);
-    
-    
     
     // today's date
     NSDate *date = [NSDate date];
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier: NSCalendarIdentifierGregorian];
-    //NSDateComponents *components = [gregorian components: NSUIntegerMax fromDate: date];
     NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate:date];
     
     // set hour/min for today
@@ -135,10 +96,9 @@
     
     UNCalendarNotificationTrigger *trigger = [UNCalendarNotificationTrigger triggerWithDateMatchingComponents:components
                                                                                                       repeats:NO];
-    
-    // Deliver the notification in five seconds.
-//    UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:5 repeats:NO];
-    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:@"FiveSecond" content:content trigger:trigger];
+    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:@"FiveSecond"
+                                                                          content:content
+                                                                          trigger:trigger];
     
     /// 3. schedule localNotification
     [self.uncenter addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
@@ -156,12 +116,12 @@
         return selectedHour;
     }
 }
+
 #pragma mark - UNUserNotificationCenterDelegate
 
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler {
     if ([response.actionIdentifier isEqualToString:UNNotificationDismissActionIdentifier]) {
         NSLog(@"Message Closed");
-        
     } else if ([response.actionIdentifier isEqualToString:UNNotificationDefaultActionIdentifier]) {
         NSLog(@"App is Open");
         [NSTimer scheduledTimerWithTimeInterval:1.0
@@ -236,7 +196,6 @@
     self.timePickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 400)];
     self.timePickerView.delegate = self;
     self.timePickerView.dataSource = self;
-    [self.timePickerView setBackgroundColor:[UIColor colorWithRed:255/255.0 green:240/255.0 blue:0/255.0 alpha:1.0]];
     [view addSubview:self.timePickerView];
     return view;
 }
