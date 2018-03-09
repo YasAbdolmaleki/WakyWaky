@@ -16,12 +16,12 @@
 @interface AddAlarmTableViewController () <UIPickerViewDelegate,UIPickerViewDataSource,UNUserNotificationCenterDelegate,AVAudioPlayerDelegate>
 @property (nonatomic,strong) UIPickerView *timePickerView;
 
+@property (strong, nonatomic) AVAudioPlayer *audioPlayer;
+@property (strong, nonatomic) UNUserNotificationCenter *uncenter;
+
 @property (nonatomic,assign) NSInteger hour;
 @property (nonatomic,assign) NSInteger mins;
 @property (nonatomic,strong) NSString *AMPM;
-
-@property (strong, nonatomic) AVAudioPlayer *audioPlayer;
-@property (strong, nonatomic) UNUserNotificationCenter *uncenter;
 @end
 
 @implementation AddAlarmTableViewController
@@ -106,6 +106,26 @@
             NSLog(@"add NotificationRequest succeeded!");
         }
     }];
+    
+    [self saveNewAlarmLocally:newDate];
+
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)saveNewAlarmLocally:(NSDate *)newDate {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    // get and modify
+    NSMutableArray *dateArrayCopy = [[NSMutableArray alloc] init];
+    id dateArray = [defaults objectForKey:@"dateArray"];
+    if (dateArray) {
+        dateArrayCopy = [dateArray mutableCopy];
+    }
+    [dateArrayCopy addObject:newDate];
+    
+    // add
+    [defaults setObject:dateArrayCopy forKey:@"dateArray"];
+    [defaults synchronize];
 }
 
 -(NSInteger)hourIn24Format:(NSInteger)selectedHour

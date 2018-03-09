@@ -14,7 +14,9 @@
 @interface MainViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *alarmsTableView;
 @property (strong, nonatomic) AddAlarmTableViewController *addAlarmTableViewController;
-@property (strong, nonatomic) NSMutableArray *testArray; 
+@property (strong, nonatomic) NSMutableArray *excitingAlarmArray;
+@property (strong, nonatomic) NSUserDefaults *defaults;
+
 @end
 
 @implementation MainViewController
@@ -22,13 +24,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.testArray = [NSMutableArray arrayWithObjects:@"09:00AM", @"12:25AM", @"04:14AM", @"02:12AM", @"01:08AM", nil];
+    self.addAlarmTableViewController = [[AddAlarmTableViewController alloc] init];
+    self.defaults = [NSUserDefaults standardUserDefaults];
+    
     [self setupNavigationBar];
     
-    [self.alarmsTableView registerNib:[UINib nibWithNibName:@"AlarmTableViewCell" bundle:nil] forCellReuseIdentifier:@"AlarmTableViewCell"];
+    [self.alarmsTableView registerNib:[UINib nibWithNibName:@"AlarmTableViewCell" bundle:nil]
+               forCellReuseIdentifier:@"AlarmTableViewCell"];
     
     self.alarmsTableView.tableFooterView = [UIView new];
     [self.alarmsTableView reloadData];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+    id dateArray = [self.defaults objectForKey:@"dateArray"];
+    if (dateArray) {
+        self.excitingAlarmArray  = [dateArray mutableCopy];
+    }
+    
+   [self.alarmsTableView reloadData];
 }
 
 #pragma setup
@@ -47,8 +62,7 @@
 }
 
 - (void)addAlarmView {
-    AddAlarmTableViewController *addAlarmTableViewController = [[AddAlarmTableViewController alloc] init];
-    [self.navigationController pushViewController:addAlarmTableViewController
+    [self.navigationController pushViewController:self.addAlarmTableViewController
                                          animated:YES];
 }
 
@@ -61,24 +75,36 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     AlarmTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AlarmTableViewCell"];
-    cell.timeLabel.text = [self.testArray objectAtIndex:indexPath.row];
+    
+    NSInteger hour = [[self currentDateComponents:indexPath] hour];
+    NSInteger minute = [[self currentDateComponents:indexPath] minute];
+    cell.timeLabel.text = [NSString stringWithFormat: @"%ld:%ld", (long)hour, (long)minute];
+    
     return cell;
+}
+
+- (NSDateComponents *)currentDateComponents:(NSIndexPath *)indexPath {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"<your date format goes here"];
+    NSDate *date = (NSDate *)[self.excitingAlarmArray objectAtIndex:indexPath.row];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    return [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:date];
 }
 
 #pragma UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [tableView beginUpdates];
-        [self.testArray  removeObjectAtIndex:[indexPath row]];
+        [self.excitingAlarmArray  removeObjectAtIndex:[indexPath row]];
+        [self.defaults setObject:self.excitingAlarmArray forKey:@"dateArray"];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [tableView endUpdates];
     }
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.testArray count];
+    return [self.excitingAlarmArray count];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
