@@ -63,13 +63,37 @@
 }
 
 - (void)setAlarmInNotificationForm {
-    // update application icon badge number
+    
     UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
     content.title = [NSString localizedUserNotificationStringForKey:@"WAKY WAKY:" arguments:nil];
     content.body = [NSString localizedUserNotificationStringForKey:@"Just making sure you are up!" arguments:nil];
-    content.sound = [UNNotificationSound defaultSound];
+    content.sound = [UNNotificationSound soundNamed:@"beep.mp3"];
     content.badge = @(UIApplication.sharedApplication.applicationIconBadgeNumber + 1);
     
+    
+    NSDateComponents *components = [self dateComponentsAddedUserAlarm];
+    NSString *uniqueIdentifier = [NSString stringWithFormat: @"%ld%ld%ld", (long)[components day],  (long)[components minute],  (long)[components hour]];
+    
+    
+    UNCalendarNotificationTrigger *trigger = [UNCalendarNotificationTrigger triggerWithDateMatchingComponents:components
+                                                                                                      repeats:YES];
+    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:uniqueIdentifier
+                                                                          content:content
+                                                                          trigger:trigger];
+    
+    
+    /// 3. schedule localNotification
+    [self.uncenter addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+        if (!error) {
+            NSLog(@"add NotificationRequest succeeded!");
+        }
+    }];
+    
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (NSDateComponents *)dateComponentsAddedUserAlarm {
     // today's date
     NSDate *date = [NSDate date];
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier: NSCalendarIdentifierGregorian];
@@ -81,7 +105,7 @@
     [components setSecond:0];
     
     NSDate *newDate = [gregorian dateFromComponents: components];
-
+    
     // Date has passed
     if ([newDate timeIntervalSinceNow] < 0.0) {
         #warning not accurate, doesn't consider the end of month or next year
@@ -94,23 +118,9 @@
     NSLog(@"--hour\n %ld",self.hour);
     NSLog(@"--components\n %@",components);
     
-    NSString *uniqueIdentifier = [NSString stringWithFormat: @"%ld", (long)newDate];
-    UNCalendarNotificationTrigger *trigger = [UNCalendarNotificationTrigger triggerWithDateMatchingComponents:components
-                                                                                                      repeats:NO];
-    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:uniqueIdentifier
-                                                                          content:content
-                                                                          trigger:trigger];
-    
-    /// 3. schedule localNotification
-    [self.uncenter addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
-        if (!error) {
-            NSLog(@"add NotificationRequest succeeded!");
-        }
-    }];
-    
     [self saveNewAlarmLocally:newDate];
-
-    [self.navigationController popViewControllerAnimated:YES];
+    
+    return components;
 }
 
 - (void)saveNewAlarmLocally:(NSDate *)newDate {
@@ -147,6 +157,7 @@
         NSLog(@"App is Open");
         [self startAlerting];
     }
+    
     completionHandler();
 }
 
