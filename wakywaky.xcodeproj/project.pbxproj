@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F311CC92058938200F445A3 /* beep.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0F311CC82058938200F445A3 /* beep.mp3 */; };
 		0FA96C722029337D00571950 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA96C712029337D00571950 /* AppDelegate.m */; };
 		0FA96C752029337D00571950 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA96C742029337D00571950 /* MainViewController.m */; };
 		0FA96C782029337D00571950 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0FA96C762029337D00571950 /* Main.storyboard */; };
@@ -42,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0F311CC82058938200F445A3 /* beep.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = beep.mp3; sourceTree = "<group>"; };
 		0FA96C6D2029337D00571950 /* wakywaky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wakywaky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FA96C702029337D00571950 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0FA96C712029337D00571950 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 			children = (
 				0FA96CD4204C4DCA00571950 /* wakywaky.entitlements */,
 				0FA96CD22048ED1200571950 /* minions.mp3 */,
+				0F311CC82058938200F445A3 /* beep.mp3 */,
 				0FA96CC02040723700571950 /* Main Page */,
 				0FA96CB52040614200571950 /* Views */,
 				0FA96C702029337D00571950 /* AppDelegate.h */,
@@ -290,6 +293,7 @@
 			files = (
 				0FA96C7D2029337D00571950 /* LaunchScreen.storyboard in Resources */,
 				0FA96CC5204077E600571950 /* AlarmTableViewCell.xib in Resources */,
+				0F311CC92058938200F445A3 /* beep.mp3 in Resources */,
 				0FA96C7A2029337D00571950 /* Assets.xcassets in Resources */,
 				0FA96CD12048E40B00571950 /* AddAlarmTableViewController.xib in Resources */,
 				0FA96CBF2040661500571950 /* MainNavigationViewController.xib in Resources */,

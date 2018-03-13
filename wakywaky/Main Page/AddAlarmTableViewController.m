@@ -94,9 +94,10 @@
     NSLog(@"--hour\n %ld",self.hour);
     NSLog(@"--components\n %@",components);
     
+    NSString *uniqueIdentifier = [NSString stringWithFormat: @"%ld", (long)newDate];
     UNCalendarNotificationTrigger *trigger = [UNCalendarNotificationTrigger triggerWithDateMatchingComponents:components
                                                                                                       repeats:NO];
-    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:@"FiveSecond"
+    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:uniqueIdentifier
                                                                           content:content
                                                                           trigger:trigger];
     
@@ -144,17 +145,18 @@
         NSLog(@"Message Closed");
     } else if ([response.actionIdentifier isEqualToString:UNNotificationDefaultActionIdentifier]) {
         NSLog(@"App is Open");
-        [NSTimer scheduledTimerWithTimeInterval:1.0
-                                         target:self
-                                       selector:@selector(playSound)
-                                       userInfo:nil
-                                        repeats:NO];
+        [self startAlerting];
     }
     completionHandler();
 }
 
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler {
     NSLog(@"----willPresentNotification");
+}
+
+#pragma AVAudioPlayerDelegate
+
+- (void)startAlerting {
     [NSTimer scheduledTimerWithTimeInterval:1.0
                                      target:self
                                    selector:@selector(playSound)
@@ -162,10 +164,8 @@
                                     repeats:NO];
 }
 
-#pragma AVAudioPlayerDelegate
-
 -(void)playSound {
-    NSURL *url = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@.mp3", [[NSBundle mainBundle] resourcePath], @"minions"]];
+    NSURL *url = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@.mp3", [[NSBundle mainBundle] resourcePath], @"beep"]];
     NSError *error;
     self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
     self.audioPlayer.numberOfLoops = -1;
