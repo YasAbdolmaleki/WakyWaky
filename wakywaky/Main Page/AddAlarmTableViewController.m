@@ -31,6 +31,8 @@
     
     [self registerForRemoteNotification];
     
+//    [self resetDefaultsAndNotifications];
+    
     self.tableView.tableFooterView = [UIView new];
     [self setTitle:@"Add Alarm"];
     
@@ -43,12 +45,33 @@
     [self.navigationItem setRightBarButtonItem:saveButton];
 }
 
+- (void)resetDefaultsAndNotifications {
+    
+    // remove badges
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    
+    // remove all pending notification
+    [self.uncenter getPendingNotificationRequestsWithCompletionHandler:^(NSArray<UNNotificationRequest *> * _Nonnull requests) {
+        for (UNNotificationRequest *req in requests) {
+            [self.uncenter removePendingNotificationRequestsWithIdentifiers:@[req.identifier]];
+        }
+    }];
+    
+    // clear NSUserDefaults
+    NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
+    NSDictionary * dict = [defs dictionaryRepresentation];
+    for (id key in dict) {
+        [defs removeObjectForKey:key];
+    }
+    [defs synchronize];
+}
+
 #pragma notification registration
 
 - (void)registerForRemoteNotification {
     self.uncenter = [UNUserNotificationCenter currentNotificationCenter];
     [self.uncenter setDelegate:self];
-    [self.uncenter requestAuthorizationWithOptions:(UNAuthorizationOptionAlert+UNAuthorizationOptionBadge+UNAuthorizationOptionSound)
+    [self.uncenter requestAuthorizationWithOptions:(UNAuthorizationOptionAlert+UNAuthorizationOptionSound)
                             completionHandler:^(BOOL granted, NSError * _Nullable error) {
                                 NSLog(@"%@" , granted ? @"success to request authorization." : @"failed to request authorization .");
                             }];
@@ -67,43 +90,47 @@
     UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
     content.title = [NSString localizedUserNotificationStringForKey:@"WAKY WAKY:" arguments:nil];
     content.body = [NSString localizedUserNotificationStringForKey:@"Just making sure you are up!" arguments:nil];
-    content.sound = [UNNotificationSound soundNamed:@"beep.mp3"];
-    content.badge = @(UIApplication.sharedApplication.applicationIconBadgeNumber + 1);
-    
+    content.sound = [UNNotificationSound soundNamed:@"minions.mp3"];
     
     NSDateComponents *components = [self dateComponentsAddedUserAlarm];
-    NSString *uniqueIdentifier = [NSString stringWithFormat: @"%ld%ld%ld", (long)[components day],  (long)[components minute],  (long)[components hour]];
-    
-    
-    UNCalendarNotificationTrigger *trigger = [UNCalendarNotificationTrigger triggerWithDateMatchingComponents:components
-                                                                                                      repeats:YES];
+    NSString *uniqueIdentifier = [NSString stringWithFormat: @"%ld%ld%ld_0", (long)[components day],  (long)[components minute],  (long)[components hour]];
+    UNCalendarNotificationTrigger *trigger = [UNCalendarNotificationTrigger triggerWithDateMatchingComponents:components repeats:YES];
     UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:uniqueIdentifier
                                                                           content:content
                                                                           trigger:trigger];
     
-    
-    /// 3. schedule localNotification
-    [self.uncenter addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
-        if (!error) {
-            NSLog(@"add NotificationRequest succeeded!");
-        }
-    }];
-    
+    int myCount = 1;
+    while ( myCount < 6 )
+    {
+        [self.uncenter addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+            if (!error) {
+                NSLog(@"add NotificationRequest succeeded!, %ld", (long)myCount);
+            }
+        }];
+        
+        NSLog(@"uniqueIdentifier %@", uniqueIdentifier);
+        
+        uniqueIdentifier = [NSString stringWithFormat: @"%ld%ld%ld_%ld", (long)[components day],  (long)[components minute],  (long)[components hour], (long)myCount];
+        [components setSecond:[components second] + 10];
+        trigger = [UNCalendarNotificationTrigger triggerWithDateMatchingComponents:components repeats:YES];
+        request = [UNNotificationRequest requestWithIdentifier:uniqueIdentifier content:content trigger:trigger];
+        
+        myCount++;
+    }
     
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (NSDateComponents *)dateComponentsAddedUserAlarm {
     // today's date
-    NSDate *date = [NSDate date];
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier: NSCalendarIdentifierGregorian];
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate:date];
+    NSDate *todayDate = [NSDate date];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate:todayDate];
     
     // set hour/min for today
     [components setHour: self.hour];
     [components setMinute: self.mins];
     [components setSecond:0];
-    
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier: NSCalendarIdentifierGregorian];
     NSDate *newDate = [gregorian dateFromComponents: components];
     
     // Date has passed
@@ -112,11 +139,6 @@
         [components setDay:[components day] + 1];
         newDate = [gregorian dateFromComponents: components];
     }
-    
-    NSLog(@"--now\n %@",date);
-    NSLog(@"--alert\n %@",newDate);
-    NSLog(@"--hour\n %ld",self.hour);
-    NSLog(@"--components\n %@",components);
     
     [self saveNewAlarmLocally:newDate];
     
@@ -150,19 +172,52 @@
 
 #pragma mark - UNUserNotificationCenterDelegate
 
-- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler {
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+didReceiveNotificationResponse:(UNNotificationResponse *)response
+         withCompletionHandler:(void (^)(void))completionHandler {
+    
     if ([response.actionIdentifier isEqualToString:UNNotificationDismissActionIdentifier]) {
         NSLog(@"Message Closed");
+        [self removeAlarmNotification:center WithResponse:response];
     } else if ([response.actionIdentifier isEqualToString:UNNotificationDefaultActionIdentifier]) {
         NSLog(@"App is Open");
-        [self startAlerting];
+        [self removeAlarmNotification:center WithResponse:response];
     }
     
     completionHandler();
 }
 
-- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler {
-    NSLog(@"----willPresentNotification");
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+       willPresentNotification:(UNNotification *)notification 
+         withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler {
+    // app is already open
+}
+
+- (void)removeAlarmNotification:(UNUserNotificationCenter *)center
+                   WithResponse:(UNNotificationResponse *)response {
+    
+    [center getPendingNotificationRequestsWithCompletionHandler:^(NSArray<UNNotificationRequest *> * _Nonnull requests) {
+        for (UNNotificationRequest *req in requests) {
+            
+            NSLog(@"request identifier %@", req.identifier);
+            
+            // parse the response identifier
+            NSArray *requestIDs = [response.notification.request.identifier componentsSeparatedByString:@"_"];
+            NSString *requestID_left = [requestIDs objectAtIndex:0];
+            NSInteger requestID_right = [[requestIDs objectAtIndex:1] integerValue];
+            
+            // remove the pending notification according to the response
+            while (requestID_right < 6) {
+                NSString *requestID = [NSString stringWithFormat:@"%@_%ld",requestID_left,(long)requestID_right];
+                if ([req.identifier isEqualToString:requestID]) {
+                    [center removePendingNotificationRequestsWithIdentifiers:@[req.identifier]];
+                    NSLog(@"Removed notification with request ID %@", requestID);
+                }
+                requestID_right++;
+            }
+        }
+    }];
+    
 }
 
 #pragma AVAudioPlayerDelegate
