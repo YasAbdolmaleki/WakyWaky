@@ -11,7 +11,7 @@
 #import "AlarmTableViewCell.h"
 #import "AddAlarmTableViewController.h"
 
-@interface MainViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface MainViewController () <UITableViewDelegate, UITableViewDataSource, AlarmTableViewCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *alarmsTableView;
 @property (strong, nonatomic) AddAlarmTableViewController *addAlarmTableViewController;
 @property (strong, nonatomic) NSMutableArray *excitingAlarmArray;
@@ -75,7 +75,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     AlarmTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AlarmTableViewCell"];
-    
+    cell.delegate = self;
     NSInteger hour = [[self currentDateComponents:indexPath] hour];
     NSInteger minute = [[self currentDateComponents:indexPath] minute];
     cell.timeLabel.text = [NSString stringWithFormat: @"%ld:%ld", (long)hour, (long)minute];
@@ -118,6 +118,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
+}
+
+- (void)valueChanged:(BOOL)switchIsON {
+    // don't repeat
+    // s.isOn
+    // repeat
+    // if off
+    // don't repreat
 }
 
 @end

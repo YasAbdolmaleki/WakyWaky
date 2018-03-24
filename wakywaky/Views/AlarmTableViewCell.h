@@ -8,7 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol AlarmTableViewCellDelegate <NSObject>
+- (void)valueChanged:(BOOL)switchIsON;
+@end
+
 @interface AlarmTableViewCell : UITableViewCell
+@property (nonatomic, weak) id <AlarmTableViewCellDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UISwitch *alertSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+
 @end

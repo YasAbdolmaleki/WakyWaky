@@ -88,7 +88,7 @@
 - (void)setAlarmInNotificationForm {
     
     UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
-    content.title = [NSString localizedUserNotificationStringForKey:@"WAKY WAKY:" arguments:nil];
+    content.title = [NSString localizedUserNotificationStringForKey:@"WAKY WAKY" arguments:nil];
     content.body = [NSString localizedUserNotificationStringForKey:@"Just making sure you are up!" arguments:nil];
     content.sound = [UNNotificationSound soundNamed:@"minions.mp3"];
     
