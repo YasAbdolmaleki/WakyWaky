@@ -49,16 +49,25 @@
 #pragma setup
 
 - (void)setupNavigationBar {
+    [self.navigationController.navigationBar
+     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor], NSFontAttributeName:[UIFont boldSystemFontOfSize:20.0f]}];
+    
     //right button
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithTitle:@"Add"
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithTitle:@"New"
                                                                   style:UIBarButtonItemStylePlain
                                                                  target:self
                                                                  action:@selector(addAlarmView)];
+    [addButton setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor], NSFontAttributeName:[UIFont systemFontOfSize:16.0f]} forState:UIControlStateNormal];
     [addButton setTintColor:[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1]];
     [self.navigationItem setRightBarButtonItem:addButton];
     
     //left button
+    [self.editButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor], NSFontAttributeName:[UIFont systemFontOfSize:16.0f]} forState:UIControlStateNormal];
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
 
 - (void)addAlarmView {
@@ -76,11 +85,33 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     AlarmTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AlarmTableViewCell"];
     cell.delegate = self;
+    cell.timeLabel.attributedText = [self timeLabelFormatt:indexPath];
+    return cell;
+}
+
+- (NSMutableAttributedString *)timeLabelFormatt:(NSIndexPath *)indexPath {
     NSInteger hour = [[self currentDateComponents:indexPath] hour];
     NSInteger minute = [[self currentDateComponents:indexPath] minute];
-    cell.timeLabel.text = [NSString stringWithFormat: @"%ld:%ld", (long)hour, (long)minute];
+
+    // setup font and string for AM or PM
+    NSDictionary *amOrPMFont = [NSDictionary dictionaryWithObject:[UIFont fontWithName:@"AppleSDGothicNeo-Bold" size:25.0] forKey:NSFontAttributeName];
+    NSMutableAttributedString *amOrPMAttString = [[NSMutableAttributedString alloc] initWithString:@"AM" attributes:amOrPMFont];
+
+    // PM
+    if (hour > 12) {
+        [amOrPMAttString.mutableString setString:@"PM"];
+        hour = hour - 12;
+    } else if (hour == 0) {
+        [amOrPMAttString.mutableString setString:@"PM"];
+        hour = 12;
+    }
     
-    return cell;
+    // setup font and string for time
+    NSDictionary *timeFont = [NSDictionary dictionaryWithObject:[UIFont fontWithName:@"AppleSDGothicNeo-Bold" size:32.0] forKey:NSFontAttributeName];
+    NSMutableAttributedString *timeAttString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat: @"%02d:%02d", (int)hour, (int)minute] attributes:timeFont];
+    
+    [timeAttString appendAttributedString:amOrPMAttString];
+    return timeAttString;
 }
 
 - (NSDateComponents *)currentDateComponents:(NSIndexPath *)indexPath {
@@ -120,7 +151,15 @@
 
 }
 
-- (void)valueChanged:(BOOL)switchIsON {
+- (void)valueChanged:(id)sender {
+    UISwitch *switchValue = (UISwitch*)sender;
+    NSLog(@"%@", switchValue.isOn ? @"ON" : @"OFF");
+    
+    // get the selected row at indexpath 
+    CGPoint hitPoint = [sender convertPoint:CGPointZero toView:self.alarmsTableView];
+    NSIndexPath *hitIndex = [self.alarmsTableView indexPathForRowAtPoint:hitPoint];
+    NSLog(@"row: %ld", (long)hitIndex.row);
+    
     // don't repeat
     // s.isOn
     // repeat

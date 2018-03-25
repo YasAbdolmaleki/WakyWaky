@@ -25,8 +25,7 @@
 
 - (IBAction)valueChanged:(id)sender {
     if (self.delegate) {
-        UISwitch *switchValue = (UISwitch*)sender;
-        [self.delegate valueChanged:switchValue.isOn];
+        [self.delegate valueChanged:sender];
     }
 }
 

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @protocol AlarmTableViewCellDelegate <NSObject>
-- (void)valueChanged:(BOOL)switchIsON;
+- (void)valueChanged:(id)sender;
 @end
 
 @interface AlarmTableViewCell : UITableViewCell

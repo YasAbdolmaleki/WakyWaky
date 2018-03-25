@@ -42,6 +42,7 @@
                                                                  target:self
                                                                  action:@selector(setAlarmInNotificationForm)];
     [saveButton setTintColor:[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1]];
+    [saveButton setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor], NSFontAttributeName:[UIFont systemFontOfSize:16.0f]} forState:UIControlStateNormal];
     [self.navigationItem setRightBarButtonItem:saveButton];
 }
 
